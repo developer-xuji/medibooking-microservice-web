@@ -7,7 +7,6 @@ import Fields from "./components/Fields";
 import ErrorMessage from "../../../ErrorMessage";
 import FormItem from "../../../FormItem";
 import signUp from "../../../../apis/signUp";
-import encodePassword from "../../../../utils/encodePassword";
 
 const PasswordSetGuide = styled.p`
   color: #5c7783;
@@ -102,7 +101,7 @@ class SignUpModal extends React.Component {
     const onSignUp = submit(() => {
       signUp({
         username: data.username.value,
-        encodedPassword: encodePassword(data.password.value),
+        password: data.password.value,
         age: data.age.value,
         gender: data.gender.value,
         firstName: data.firstName.value,
@@ -110,8 +109,11 @@ class SignUpModal extends React.Component {
       })
         .then((data) => {
           onClose();
+          window.location.reload();
         })
-        .catch(()=>{this.setSignUpFailMessage("Server error, please try again later!")});
+        .catch(() => {
+          this.setSignUpFailMessage("Server error, please try again later!");
+        });
     });
 
     return (
@@ -146,7 +148,9 @@ class SignUpModal extends React.Component {
               required
               id="gender"
               form="signUpForm"
-              onChange={(event)=>{setData(event,"gender")}}
+              onChange={(event) => {
+                setData(event, "gender");
+              }}
             >
               <option value="" disabled selected hidden>
                 Please Choose your gender...
@@ -158,7 +162,7 @@ class SignUpModal extends React.Component {
               Use at least 8 characters, avoid dictionary words & common
               passwords.
             </PasswordSetGuide>
-            {signUpFailMessage &&(
+            {signUpFailMessage && (
               <FormItem>
                 <ErrorMessage>{signUpFailMessage}</ErrorMessage>
               </FormItem>

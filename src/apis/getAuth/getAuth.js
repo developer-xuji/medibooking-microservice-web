@@ -1,8 +1,8 @@
-import instance from "../../lib/instance";
+import authInstance from "../../lib/authInstance";
 import setUserDetail from "../../utils/setUserDetail";
 
 const getAuth = (token) =>
-  instance.post("/auth", token).then((response) => {
+  authInstance.post("/auth", token).then((response) => {
     const { accountId, grantedAuthorities } = response.data;
     const { authority } = grantedAuthorities[0];
     const role = authority;

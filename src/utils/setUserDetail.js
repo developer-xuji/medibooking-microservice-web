@@ -9,7 +9,6 @@ const setUserDetail = (role, account_id) => {
   };
   const parameterList = getParameterList(param);
   processDate(url, "get", parameterList).then((response) => {
-    console.log(response);
     localStorage.setItem("USER_ID", response.id);
   });
 };
